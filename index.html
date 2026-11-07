@@ -2183,7 +2183,7 @@ function toggleNotes(){$('#notes').classList.toggle('show');$('#bn').classList.t
 function fs(){if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>toast('El navegador no permitió la pantalla completa'));}else{document.exitFullscreen&&document.exitFullscreen();}}
 const FS_IN='<svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',FS_OUT='<svg viewBox="0 0 24 24"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>';
 /* en pantalla completa se ocultan la barra y los botones: se sigue pasando con teclado, clic o gesto */
-function fsMode(){const on=!!document.fullscreenElement||(innerWidth>=screen.width-1&&innerHeight>=screen.height-1),de=document.documentElement,was=de.classList.contains('fsmode');de.classList.toggle('fsmode',on);if(on&&!was&&!STATIC)toast('Pantalla completa · F o Esc para salir');}
+function fsMode(){const on=!!document.fullscreenElement||matchMedia('(display-mode: fullscreen)').matches,de=document.documentElement,was=de.classList.contains('fsmode');de.classList.toggle('fsmode',on);if(on&&!was&&!STATIC)toast('Pantalla completa · F o Esc para salir');}
 document.addEventListener('fullscreenchange',fsMode);addEventListener('resize',fsMode);fsMode();
 document.addEventListener('fullscreenchange',()=>{const b=$('[data-c="fs"]');b.innerHTML=document.fullscreenElement?FS_OUT:FS_IN;b.classList.toggle('on',!!document.fullscreenElement);b.title=document.fullscreenElement?'Salir de pantalla completa (F)':'Pantalla completa (F)';});
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),1700);}
